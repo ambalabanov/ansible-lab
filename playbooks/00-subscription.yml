@@ -16,3 +16,9 @@
       rhsm_repository:
         name: ansible-2-for-rhel-8-x86_64-rpms
         state: enabled
+
+    - name: ansible installed
+      yum:
+        name: 
+          - ansible
+        state: latest
