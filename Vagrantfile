@@ -24,8 +24,7 @@ Vagrant.configure("2") do |config|
       prl0.memory = 2048
       prl0.cpus = 2
       # prl0.linked_clone = false
-      prl0.customize ["set", :id, "--device-set", "cdrom0", "--image",
-                 "rhel-8.4-x86_64-dvd.iso", "--connect"]
+      prl0.customize ["set", :id, "--device-set", "cdrom0", "--image", "rhel-8.4-x86_64-dvd.iso", "--connect"]
     end
   end
 
@@ -50,6 +49,7 @@ Vagrant.configure("2") do |config|
       prl1.memory = 1024
       prl1.cpus = 2
       # prl1.linked_clone = false
+      prl1.customize ["set", :id, "--device-add", "hdd", "--size", "1024", "--iface", "sata"]
     end
   end
 
