@@ -1,0 +1,7 @@
+127.0.0.1       localhost
+::1             localhost
+192.168.55.10   master.example.com master
+192.168.55.11   node1.example.com node1
+192.168.55.12   node2.example.com node2
+192.168.55.13   node3.example.com node3
+192.168.55.14   node4.example.com node4

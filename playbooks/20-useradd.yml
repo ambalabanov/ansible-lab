@@ -1,0 +1,35 @@
+---
+- name: add use for ansible
+  hosts: all
+  remote_user: vagrant
+  become: yes
+  vars_files: 
+    - vars/passwd.yml
+  vars:
+    username: vagrant
+  tasks:
+    - name: ensure user exists
+      user:
+        name: "{{ username  }}"
+        state: present
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
+      notify: set password
+    
+    - name: add user to sudoers
+      copy:
+        content: "{{ username }} ALL=(ALL) NOPASSWD: ALL\n"
+        dest: /etc/sudoers.d/{{ username  }}
+    
+    - name: add ssh key
+      authorized_key:
+        user: "{{ username }}"
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+        state: present
+
+  handlers:
+    - name: set password
+      user:
+        name: "{{ username  }}"
+        password: "{{ password | password_hash('sha512',salt) }}"

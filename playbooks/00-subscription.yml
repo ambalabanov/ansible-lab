@@ -1,0 +1,18 @@
+---
+- name: subscription of system
+  hosts: master
+  remote_user: vagrant
+  vars_files:
+    - vars/subscription.yml
+  tasks:
+    - name: register
+      redhat_subscription:
+        activationkey: "{{ activationkey }}"
+        org_id: "{{ org_id }}"
+        # auto_attach: yes
+        state: present
+    
+    - name: ansible repo enabled
+      rhsm_repository:
+        name: ansible-2-for-rhel-8-x86_64-rpms
+        state: enabled

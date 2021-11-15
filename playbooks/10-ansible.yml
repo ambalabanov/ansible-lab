@@ -1,0 +1,21 @@
+---
+- name: python
+  hosts: all
+  remote_user: vagrant
+  tasks:
+    - name: platform-python installed
+      yum:
+        name: 
+          - platform-python
+        state: present
+
+- name: ansible
+  hosts: master
+  remote_user: vagrant
+  tasks:   
+    - name: ansible installed
+      yum:
+        name: 
+          - ansible
+        state: latest
+

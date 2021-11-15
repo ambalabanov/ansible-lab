@@ -1,0 +1,8 @@
+[master]
+master.example.com
+
+[node]
+node1.example.com 
+node2.example.com 
+node3.example.com 
+node4.example.com 
