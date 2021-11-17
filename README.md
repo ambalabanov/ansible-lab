@@ -10,8 +10,18 @@
 ## install
 
 ```shell
-$ 
 $ vagrant up
+...
+Vault password:
+...
+$ vagrant ssh master
+$ cd /vagrant/playbooks/
+$ ansible all -m ping -o
+node2.example.com | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/libexec/platform-python"},"changed": false,"ping": "pong"}
+node1.example.com | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/libexec/platform-python"},"changed": false,"ping": "pong"}
+node4.example.com | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/libexec/platform-python"},"changed": false,"ping": "pong"}
+node3.example.com | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/libexec/platform-python"},"changed": false,"ping": "pong"}
+master.example.com | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/libexec/platform-python"},"changed": false,"ping": "pong"}
 ```
 
 ## hosts

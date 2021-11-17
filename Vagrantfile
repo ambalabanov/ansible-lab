@@ -22,6 +22,22 @@ Vagrant.configure("2") do |config|
       ansible.playbook = "playbooks/00-subscription.yml"
       ansible.ask_vault_pass = true
     end
+    master.vm.provision "shell" do |shell00|
+      shell00.privileged = false
+      shell00.inline = <<-SHELL
+        ssh-keygen -f /home/vagrant/.ssh/id_rsa -N ""
+        ssh-keyscan -H master.example.com >> ~/.ssh/known_hosts
+        ssh-keyscan -H node1.example.com >> ~/.ssh/known_hosts
+        ssh-keyscan -H node2.example.com >> ~/.ssh/known_hosts
+        ssh-keyscan -H node3.example.com >> ~/.ssh/known_hosts
+        ssh-keyscan -H node4.example.com >> ~/.ssh/known_hosts
+        sshpass -p vagrant ssh-copy-id vagrant@master.example.com
+        sshpass -p vagrant ssh-copy-id vagrant@node1.example.com
+        sshpass -p vagrant ssh-copy-id vagrant@node2.example.com
+        sshpass -p vagrant ssh-copy-id vagrant@node3.example.com
+        sshpass -p vagrant ssh-copy-id vagrant@node4.example.com
+      SHELL
+    end
     master.vm.provider "parallels" do |prl0|
       # prl0.check_guest_tools = false
       prl0.name = "master"
