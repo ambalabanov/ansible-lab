@@ -18,6 +18,10 @@ Vagrant.configure("2") do |config|
         cp -f /vagrant/hosts /etc/hosts
       SHELL
     end
+    master.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbooks/00-subscription.yml"
+      ansible.ask_vault_pass = true
+    end
     master.vm.provider "parallels" do |prl0|
       # prl0.check_guest_tools = false
       prl0.name = "master"
