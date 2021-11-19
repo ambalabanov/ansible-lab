@@ -22,4 +22,5 @@
       yum:
         name: 
           - ansible
+          - rhel-system-roles
         state: latest
