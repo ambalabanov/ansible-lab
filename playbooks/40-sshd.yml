@@ -2,11 +2,11 @@
 - name: configure sshd
   hosts: all
   tasks:
-    - name: Banner set
+    - name: Banner /etc/redhat-release
       replace:
         path: /etc/ssh/sshd_config
         regexp: '^[#]?Banner.*$'
-        replace: 'Banner /etc/motd'
+        replace: 'Banner /etc/redhat-release'
       notify: sshd restart
 
     - name: X11Forwarding no
