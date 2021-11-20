@@ -6,3 +6,17 @@ node1.example.com
 node2.example.com 
 node3.example.com 
 node4.example.com 
+
+[web]
+node1.example.com
+
+[database]
+node[3:4].example.com
+
+[proxy]
+node2.example.com
+
+[servers:children]
+web
+database
+proxy
