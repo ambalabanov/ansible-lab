@@ -1,0 +1,31 @@
+---
+- name: configure sshd
+  hosts: all
+  tasks:
+    - name: Banner set
+      replace:
+        path: /etc/ssh/sshd_config
+        regexp: '^[#]?Banner.*$'
+        replace: 'Banner /etc/motd'
+      notify: sshd restart
+
+    - name: X11Forwarding no
+      replace:
+        path: /etc/ssh/sshd_config
+        regexp: '^[#]?X11Forwarding.*[yes|no]$'
+        replace: 'X11Forwarding no'
+      notify: sshd restart
+
+    - name: MaxAuthTries 3
+      replace:
+        path: /etc/ssh/sshd_config
+        regexp: '^[#]MaxAuthTries.*[0-9]{1,}$'
+        replace: 'MaxAuthTries 3'
+      notify: sshd restart
+  
+  handlers:
+    - name: sshd restart
+      service:
+        name: sshd
+        state: restarted
+
