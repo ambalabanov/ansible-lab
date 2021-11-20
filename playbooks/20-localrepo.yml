@@ -65,7 +65,7 @@
     - name: restorecon
       command: restorecon -irv {{ conf_file }}
 
-- name: add  repos
+- name: add repos
   hosts: node
   tasks:
     - name: http open
@@ -81,7 +81,7 @@
         gpgcheck: yes
         state: present
 
-    - name: AppStream  repo added
+    - name: AppStream repo added
       yum_repository:
         name: AppStream
         description: RHEL 8.4 AppStream (DVD)
