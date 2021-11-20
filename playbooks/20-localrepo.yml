@@ -44,13 +44,26 @@
       template:
         src: templates/repo.conf.j2
         dest: "{{ conf_file }}"
-      notify: restart httpd
+      notify: 
+        - restart httpd
+        - restorecon
+
+    - name: httpd_config_t context fixed
+      sefcontext:
+        target: '/etc/httpd/conf.d(/.*)?'
+        setype: httpd_config_t
+        state: present
+      notify:
+        - restorecon
 
   handlers:
     - name: restart httpd
       service:
         name: httpd
         state: restarted
+    
+    - name: restorecon
+      command: restorecon -irv {{ conf_file }}
 
 - name: add  repos
   hosts: node
