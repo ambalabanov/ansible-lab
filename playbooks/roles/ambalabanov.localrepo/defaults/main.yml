@@ -1,0 +1,11 @@
+---
+# defaults file for abalabanov.localrepo
+mount_point: /media
+conf_file: /etc/httpd/conf.d/repo.conf
+packages:
+  - firewalld
+  - httpd
+repos:
+  - AppStream
+  - BaseOS
+reponode: master.example.com

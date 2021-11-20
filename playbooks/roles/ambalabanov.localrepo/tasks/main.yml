@@ -1,0 +1,73 @@
+---
+# tasks file for abalabanov.localrepo
+- name: mount DVD
+  mount:
+    src: /dev/cdrom
+    path: "{{ mount_point }}"
+    fstype: iso9660
+    state: mounted
+  when: inventory_hostname == reponode 
+
+- name: packages installed
+  yum:
+    name: "{{ packages }}"
+    state: present
+  when: inventory_hostname == reponode 
+
+- name: service started & enabled
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: 
+    "{{ packages }}"
+  when: inventory_hostname == reponode 
+
+- name: firewall configured
+  firewalld:
+    service: http
+    state: enabled
+    permanent: yes
+    immediate: yes
+  when: inventory_hostname == reponode 
+
+- name: test page created
+  copy:
+    content: "welcome on board\n"
+    dest: /var/www/html/index.html
+  when: inventory_hostname == reponode 
+
+- name: httpd configured
+  template:
+    src: templates/repo.conf.j2
+    dest: "{{ conf_file }}"
+  notify:
+    - restorecon
+    - restart httpd
+  when: inventory_hostname == reponode 
+
+- name: httpd_config_t context fixed
+  sefcontext:
+    target: '/etc/httpd/conf.d(/.*)?'
+    setype: httpd_config_t
+    state: present
+  notify:
+    - restorecon
+    - restart httpd
+  when: inventory_hostname == reponode 
+
+- name: force running of all notified handlers now
+  meta: flush_handlers
+  
+- name: http open
+  uri:
+    url: http://{{ reponode }}/repo/{{ item }}/repodata/repomd.xml
+  loop: 
+    "{{ repos }}"
+
+- name: repo added
+  template:
+    src: templates/repo.j2
+    dest: /etc/yum.repos.d/{{ item }}.repo
+  loop: 
+    "{{ repos }}"

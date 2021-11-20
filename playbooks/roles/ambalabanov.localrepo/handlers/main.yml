@@ -1,0 +1,8 @@
+---
+# handlers file for abalabanov.localrepo
+- name: restorecon
+  command: restorecon -irv /etc/httpd/conf.d
+- name: restart httpd
+  service:
+    name: httpd
+    state: restarted  

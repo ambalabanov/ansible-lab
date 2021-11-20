@@ -1,0 +1,7 @@
+---
+- name: configure repos
+  hosts: all
+  roles:
+    - role: ambalabanov.localrepo
+      vars:
+      - reponode: master.example.com
