@@ -1,0 +1,53 @@
+---
+- name: Enable web service
+  hosts: node1.example.com
+  become: yes
+  tasks:
+    - name: packages installed
+      yum:
+        name:
+          - firewalld
+          - httpd
+          - mariadb-server
+          - php
+          - php-mysqlnd
+        state: latest
+    
+    - name: services started
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - firewalld
+        - httpd
+        - mariadb
+    
+    - name: firewalld configured
+      firewalld:
+        service: http
+        state: enabled
+        permanent: yes
+        immediate: yes
+    
+    - name: web content created
+      get_url:
+        url: http://example.com/index.html
+        dest: /var/www/html/
+    
+    - name: php content created
+      copy:
+        content: "<?php phpinfo(); ?>"
+        dest: /var/www/html/index.php
+
+- name: check web
+  hosts: localhost
+  become: no
+  tasks:
+    - name: get web content
+      uri:
+        url: http://node1.example.com/index.html
+
+    - name: get php content
+      uri:
+        url: http://node1.example.com/index.php
