@@ -2,15 +2,21 @@
 - name: Enable web service
   hosts: node1.example.com
   become: yes
+  vars:
+    packages:
+      - firewalld
+      - httpd
+      - mariadb-server
+      - php
+      - php-mysqlnd
+    services:
+      - firewalld
+      - httpd
+      - mariadb
   tasks:
     - name: packages installed
       yum:
-        name:
-          - firewalld
-          - httpd
-          - mariadb-server
-          - php
-          - php-mysqlnd
+        name: "{{ packages }}"
         state: latest
     
     - name: services started
@@ -18,10 +24,7 @@
         name: "{{ item }}"
         state: started
         enabled: yes
-      loop:
-        - firewalld
-        - httpd
-        - mariadb
+      loop: "{{ services }}"
     
     - name: firewalld configured
       firewalld:
