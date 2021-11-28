@@ -1,0 +1,30 @@
+---
+- name: Install remote facts
+  hosts: web
+  gather_facts: no
+  vars:
+    remote_dir: /etc/ansible/facts.d/
+  tasks:
+    - name: Create the remote directory
+      file:
+        state: directory
+        recurse: yes
+        path: "{{ remote_dir }}"
+    - name: Install the new facts
+      copy:
+        content: |
+          [general]
+          package = httpd
+          service = httpd
+          state = started
+          enabled = true
+        dest: "{{ remote_dir }}/http.fact"
+
+- name: "Gather facts and fact dump"
+  hosts: web
+  gather_facts: no
+  tasks:
+    - gather_facts:
+    - name: Print custom facts
+      debug:
+        var: ansible_facts.ansible_local
