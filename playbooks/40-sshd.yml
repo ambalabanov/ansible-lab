@@ -5,21 +5,21 @@
     - name: Banner /etc/redhat-release
       replace:
         path: /etc/ssh/sshd_config
-        regexp: '^[#]?Banner.*$'
+        regexp: '^#?Banner.*$'
         replace: 'Banner /etc/redhat-release'
       notify: sshd restart
 
     - name: X11Forwarding no
       replace:
         path: /etc/ssh/sshd_config
-        regexp: '^[#]?X11Forwarding.*[yes|no]$'
+        regexp: '^#?X11Forwarding.*[yes|no]$'
         replace: 'X11Forwarding no'
       notify: sshd restart
 
     - name: MaxAuthTries 3
       replace:
         path: /etc/ssh/sshd_config
-        regexp: '^[#]MaxAuthTries.*[0-9]{1,}$'
+        regexp: '^#?MaxAuthTries.*[0-9]{1,}$'
         replace: 'MaxAuthTries 3'
       notify: sshd restart
   
