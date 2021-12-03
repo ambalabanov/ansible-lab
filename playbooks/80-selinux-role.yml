@@ -1,0 +1,33 @@
+---
+- name: system roles installed
+  hosts: master
+  vars:
+    package: rhel-system-roles
+  tasks:
+    - name: "{{ package }} installed"
+      yum:
+        name: "{{ package }}"
+        state: present
+
+- name: selinux configured
+  hosts: web
+  vars:
+    selinux_policy: targeted
+    selinux_state: enforcing
+    selinux_booleans:
+      - { name: 'httpd_can_network_connect', state: 'on' }
+    selinux_ports:
+      - ports:
+          - "8081"
+          - "8082"
+        proto: 'tcp'
+        setype: 'http_port_t'
+        state: 'present'
+  # apply role
+  roles:
+    - role: rhel-system-roles.selinux
+  # another way include_role 
+  tasks:
+    - name: 
+      include_role:
+        name: rhel-system-roles.selinux
