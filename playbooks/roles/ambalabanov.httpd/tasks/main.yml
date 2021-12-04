@@ -1,0 +1,34 @@
+---
+# tasks file for ambalabanov.httpd
+
+- name: packages installed
+  yum:
+    name: "{{ packages }}"
+    state: latest
+
+- name: services started
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: "{{ services }}"
+
+- name: firewalld configured
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop:
+  - http
+  - https
+
+- name: html content created
+  template:
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html
+
+- name: php content created
+  template:
+    src: templates/index.php.j2
+    dest: /var/www/html/index.php

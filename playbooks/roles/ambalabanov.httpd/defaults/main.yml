@@ -1,0 +1,11 @@
+---
+# defaults file for ambalabanov.httpd
+packages:
+  - firewalld
+  - httpd
+  - php
+  - php-mysqlnd
+  - mod_ssl
+services:
+  - firewalld
+  - httpd

@@ -1,0 +1,21 @@
+---
+# tasks file for ambalabanov.mysql
+
+- name: packages installed
+  yum:
+    name: "{{ packages }}"
+    state: latest
+
+- name: services enabled
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: "{{ services }}"
+
+- name: firewalld configured
+  firewalld:
+    port: 3306/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes

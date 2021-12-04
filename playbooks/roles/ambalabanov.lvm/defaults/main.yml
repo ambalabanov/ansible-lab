@@ -1,0 +1,10 @@
+---
+# defaults file for ambalabanov.lvm
+
+dpath: /dev/sdb
+dname: sdb
+dpart: sdb1
+vgname: vgdata
+vgpath: /dev/sdb1
+lvname: lvdata
+mpath: /data
