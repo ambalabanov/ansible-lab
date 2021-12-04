@@ -3,8 +3,8 @@
 - import_playbook: 20-localrepo-role.yml
 - import_playbook: 30-motd.yml
 - import_playbook: 40-sshd.yml
-- import_playbook: 50-datadabe-role.yml
+- import_playbook: 50-database-role.yml
 - import_playbook: 60-web-role.yml
-- import_playbook: 70-remotefacts.yml
+- import_playbook: 70-customfacts.yml
 - import_playbook: 80-selinux-role.yml
 - import_playbook: 90-proxy-role.yml
