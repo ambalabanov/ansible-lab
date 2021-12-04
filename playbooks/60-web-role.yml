@@ -11,14 +11,13 @@
   tasks:
     - name: test url
       uri:
-        url: "{{ item[1] }}://{{ item[0] }}/index.{{ item[2] }}"
+        url: "{{ item[1] }}://{{ item[0] }}/"
         validate_certs: no
         return_content: yes
       register: this
       with_nested:
       - "{{ groups['web'] }}"
       - [ 'http', 'https' ]
-      - [ 'html', 'php' ]
     
     - name: return content
       debug:

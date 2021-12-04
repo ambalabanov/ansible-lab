@@ -23,12 +23,7 @@
   - http
   - https
 
-- name: html content created
-  template:
-    src: templates/index.html.j2
-    dest: /var/www/html/index.html
-
-- name: php content created
+- name: web content created
   template:
     src: templates/index.php.j2
     dest: /var/www/html/index.php
