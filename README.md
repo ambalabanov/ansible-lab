@@ -16,7 +16,6 @@ Vault password:
 ...
 $ vagrant ssh master
 $ cd /vagrant/playbooks/
-$ ansible-galaxy role install -r roles/requirements.yml
 $ ansible all -m ping -o
 node2.example.com | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/libexec/platform-python"},"changed": false,"ping": "pong"}
 node1.example.com | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/libexec/platform-python"},"changed": false,"ping": "pong"}

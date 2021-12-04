@@ -1,15 +1,26 @@
 ---
+- name: Install roles
+  hosts: localhost
+  gather_facts: no
+  become: no
+  tasks:
+    - name: install requirements
+      command: ansible-galaxy role install -r roles/requirements.yml
+      register: result
+      changed_when:
+        - "'was installed successfully' in result.stdout"
 - name: Configure haproxy
   hosts: proxy
-  vars:
-    haproxy_backend_servers:
-      - name: app1
-        address: "{{ groups['web'][0]}}:80"
-      - name: app2
-        address: "{{ groups['web'][1]}}:80"
-  roles:
-    - role: geerlingguy.haproxy
-  post_tasks:
+  tasks:
+    - include_role:
+        name: geerlingguy.haproxy
+      vars:
+        haproxy_backend_servers:
+          - name: app1
+            address: "{{ groups['web'][0]}}:80"
+          - name: app2
+            address: "{{ groups['web'][1]}}:80"
+
     - name: firewalld configured
       firewalld:
         service: http
