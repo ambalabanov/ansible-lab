@@ -1,19 +1,17 @@
 ---
-- name: rollback all
-  hosts: all
-  remote_user: vagrant
-  become: yes
-  vars:
-    username: devops
+- name: rollback master
+  hosts: master
   tasks:
-    - name: user deleted
-      user:
-        name: "{{ username  }}"
+    - name: ansible repo disabled
+      rhsm_repository:
+        name: ansible-2-for-rhel-8-x86_64-rpms
+        state: disabled       
+    - name: unregister
+      redhat_subscription:
         state: absent
-        remove: yes
-        force: yes
-
-    - name: sudoers deleted
-      file:
-        path: "/etc/sudoers.d/{{ username  }}"
+    - name: ansible removed
+      yum:
+        name: 
+          - ansible
+          - rhel-system-roles
         state: absent

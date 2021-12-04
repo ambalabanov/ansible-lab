@@ -1,0 +1,7 @@
+---
+- name: Configure database server
+  hosts: database
+  roles:
+    - ambalabanov.lvm
+    - ambalabanov.mysql
+    

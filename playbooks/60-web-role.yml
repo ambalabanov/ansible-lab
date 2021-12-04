@@ -1,0 +1,25 @@
+---
+- name: Configure web servers
+  hosts: web
+  become: yes
+  roles:
+    - ambalabanov.httpd
+
+- name: check connect
+  hosts: localhost
+  become: no
+  tasks:
+    - name: test url
+      uri:
+        url: "{{ item[1] }}://{{ item[0] }}/index.{{ item[2] }}"
+        validate_certs: no
+        return_content: yes
+      register: this
+      with_nested:
+      - "{{ groups['web'] }}"
+      - [ 'http', 'https' ]
+      - [ 'html', 'php' ]
+    
+    - name: return content
+      debug:
+        var: this.results

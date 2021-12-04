@@ -23,10 +23,6 @@
         proto: 'tcp'
         setype: 'http_port_t'
         state: 'present'
-  # apply role
-  roles:
-    - role: rhel-system-roles.selinux
-  # another way include_role 
   tasks:
     - name: 
       include_role:
