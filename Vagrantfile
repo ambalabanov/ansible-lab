@@ -46,6 +46,16 @@ Vagrant.configure("2") do |config|
       # prl0.linked_clone = false
       prl0.customize ["set", :id, "--device-set", "cdrom0", "--image", "rhel-8.4-x86_64-dvd.iso", "--connect"]
     end
+    master.trigger.before :destroy do |trigger|
+      trigger.name = "Unregister RHN Guest"
+      trigger.warn = "Unregister"
+      trigger.run_remote = {inline: <<-SHELL
+      subscription-manager remove --all
+      subscription-manager unregister
+      subscription-manager clean
+      SHELL
+      }
+    end
   end
 
   # Managed Node1

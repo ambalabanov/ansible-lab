@@ -34,3 +34,8 @@ master.example.com | SUCCESS => {"ansible_facts": {"discovered_interpreter_pytho
 | node3    | node3.example.com  | 192.168.55.13 | managed host |
 | node4    | node4.example.com  | 192.168.55.14 | managed host |
 
+## remove
+
+```shell
+$ vagrant destroy -f
+```
