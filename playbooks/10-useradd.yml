@@ -3,10 +3,9 @@
   hosts: all
   remote_user: vagrant
   become: yes
-  vars_files: 
-    - vars/passwd.yml
   vars:
     username: vagrant
+    password: vagrant
   tasks:
     - name: ensure user exists
       user:
@@ -29,4 +28,4 @@
     - name: set password
       user:
         name: "{{ username  }}"
-        password: "{{ password | password_hash('sha512',salt) }}"
+        password: "{{ password | password_hash('sha512') }}"
