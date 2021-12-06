@@ -1,0 +1,13 @@
+---
+- name: Crontab
+  hosts: database
+  tasks:
+    - name: Creates crontab
+      cron:
+        name: yum autoupdate
+        weekday: "2"
+        minute: "0"
+        hour: "12"
+        user: root
+        job: "YUMINTERACTIVE=0 /usr/sbin/yum-autoupdate"
+        state: present
