@@ -1,0 +1,21 @@
+---
+- name: backup proxy configs
+  hosts: proxy
+  vars:
+    configfile: /etc/haproxy/haproxy.cfg 
+  tasks:
+    - name: fetch {{ configfile }}
+      fetch:
+        src: "{{ configfile }}"
+        dest: files/
+        flat: yes
+    
+    - name: archive /etc
+      archive:
+        path: /etc
+        dest: /tmp/etc.tgz
+        owner: root
+        group: root
+        mode: '0640'
+    
+
