@@ -27,3 +27,14 @@
   template:
     src: templates/index.php.j2
     dest: /var/www/html/index.php
+
+- name: return content
+  uri:
+    url: "{{ item }}://{{ inventory_hostname }}/"
+    validate_certs: no
+    return_content: yes
+  loop:
+  - http
+  - https
+  delegate_to: localhost
+
