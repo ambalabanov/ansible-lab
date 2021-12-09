@@ -11,6 +11,7 @@
         - "'was installed successfully' in result.stdout"
 - name: Configure haproxy
   hosts: proxy
+  become: yes
   tasks:
     - include_role:
         name: geerlingguy.haproxy

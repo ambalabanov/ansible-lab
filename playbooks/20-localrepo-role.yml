@@ -1,6 +1,7 @@
 ---
 - name: configure repos
   hosts: all
+  become: yes
   roles:
     - role: ambalabanov.localrepo
       vars:

@@ -1,6 +1,7 @@
 ---
 - name: Crontab
   hosts: database
+  become: yes
   tasks:
     - name: Creates crontab
       cron:

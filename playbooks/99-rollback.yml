@@ -1,6 +1,7 @@
 ---
 - name: rollback master
   hosts: master
+  become: yes
   tasks:
     - name: ansible repo disabled
       rhsm_repository:

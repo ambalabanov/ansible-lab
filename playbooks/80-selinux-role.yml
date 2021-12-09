@@ -1,6 +1,7 @@
 ---
 - name: system roles installed
   hosts: master
+  become: yes
   vars:
     package: rhel-system-roles
   tasks:
@@ -11,6 +12,7 @@
 
 - name: selinux configured
   hosts: web
+  become: yes
   vars:
     selinux_policy: targeted
     selinux_state: enforcing

@@ -1,6 +1,7 @@
 ---
 - name: configure sshd
   hosts: all
+  become: yes
   tasks:
     - name: Banner /etc/redhat-release
       replace:

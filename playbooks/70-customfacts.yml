@@ -2,6 +2,7 @@
 - name: Install remote facts
   hosts: web
   gather_facts: no
+  become: yes
   vars:
     remote_dir: /etc/ansible/facts.d/
   tasks:
@@ -29,11 +30,3 @@
     - name: Print custom facts
       debug:
         var: ansible_facts.ansible_local
-
-    - name: Gather the rpm package facts
-      package_facts:
-        manager: auto
-
-    # - name: Print the rpm package facts
-    #   debug:
-    #     var: ansible_facts.packages

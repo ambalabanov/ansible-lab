@@ -1,6 +1,7 @@
 ---
 - name: message of the day
   hosts: all
+  become: yes
   tasks:
     - name: motd installed
       template:
