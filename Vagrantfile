@@ -2,8 +2,6 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.ssh.username = 'root'
-  config.ssh.password = 'vagrant'
 
   # Master node
   config.vm.define "master" do |master|
@@ -45,7 +43,7 @@ Vagrant.configure("2") do |config|
       prl0.memory = 2048
       prl0.cpus = 2
       # prl0.linked_clone = false
-      prl0.customize ["set", :id, "--device-set", "cdrom0", "--image", "rhel-8.4-x86_64-dvd.iso", "--connect"]
+      prl0.customize ["set", :id, "--device-set", "cdrom0", "--image", "rhel-8.5-x86_64-dvd.iso", "--connect"]
     end
     master.trigger.before :destroy do |trigger|
       trigger.name = "Unregister RHN Guest"
