@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
 
   # Master node
   config.vm.define "master" do |master|
-    master.vm.box = "ambalabanov/rhel-8.5-x86_64"
+    master.vm.box = "ambalabanov/rhel"
     # master.vm.box_version = "1.1.0"
     master.vm.box_download_insecure =true
     master.vm.hostname = "master.example.com"
@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
   # Managed 4 Nodes
   (1..4.to_i).each do |i|
     config.vm.define "node#{i}" do |node|
-      node.vm.box = "ambalabanov/rhel-8.5-x86_64"
+      node.vm.box = "ambalabanov/rhel"
       # node.vm.box_version = "1.1.0"
       node.vm.box_download_insecure =true
       node.vm.hostname = "node#{i}.example.com"
